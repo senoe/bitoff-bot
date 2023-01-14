@@ -1,3 +1,4 @@
+import logging
 import os
 import time
 from datetime import datetime
@@ -20,6 +21,11 @@ class Paginator(InlineKeyboardPaginator):
     current_page_label = '· {} ·'
 
 
+def get_time():
+    date = datetime.now(timezone("America/Los_Angeles"))
+    return date.strftime("%Y-%m-%d %H:%M:%S")
+
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /start is issued."""
     await update.message.reply_markdown_v2("⚡️*Bitoff Bot* \- an unofficial bitoff\.io bot"
@@ -32,10 +38,18 @@ def track_offers():
     global recorded_offers
     print("Order tracking started.")
     while True:
-        data = bitoff.get_offer_list()
+        data = None
+        while not data:
+            try:
+                data = bitoff.get_offer_list()
+            except Exception as e:
+                print(e)
+
         offer_count = data["shops"][0]["count"]
 
         recorded_offer_count = len(recorded_offers)
+        print(f"[{get_time()}] track_offers (C: {recorded_offer_count} | S: {offer_count})")
+
         if recorded_offer_count != offer_count:
             print(f"Offer count changed: {recorded_offer_count} -> {offer_count}")
             previous_offers = recorded_offers
@@ -132,10 +146,7 @@ async def get_offer_list_response(page: int = 1):
     response += "\n*Fast release* offers are indicated by the `≡` symbol."
     response += "\nThe fiat amount represents the *price* of the item(s)."
 
-    date = datetime.now(timezone("America/Los_Angeles"))
-    current_time = date.strftime("%Y-%m-%d %H:%M:%S")
-
-    response += f"\nDisplaying page `{data['pagination']['current']}` of `{data['pagination']['lastPage']}`. Last updated @ `{current_time}`"
+    response += f"\nDisplaying page `{data['pagination']['current']}` of `{data['pagination']['lastPage']}`. Last updated @ `{get_time()}`"
 
     response = response \
         .replace(".", "\.").replace("-", "\-").replace("|", "\|").replace("(", "\(").replace(")", "\)") \
