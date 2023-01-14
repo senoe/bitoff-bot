@@ -36,7 +36,7 @@ def track_offers():
         offer_count = data["shops"][0]["count"]
 
         recorded_offer_count = len(recorded_offers)
-        if recorded_offer_count != offer_count:
+        if recorded_offer_count < offer_count:
             print(f"New offers discovered! {recorded_offer_count} -> {offer_count}")
             previous_offers = recorded_offers
             recorded_offers = data["list"]
