@@ -74,9 +74,9 @@ def track_offers():
                     uk = data['source'] == "united kingdom"
                     message = f"🆕 Offer: *Amazon{'․co․uk' if uk else '․com'}* | `{offer['order_id']}`\n"
                     message += f"• 🛍 Shopper: {shopper}\n"
-                    message += f"• 💰 Amount: `{round(offer[amount_key], 8)} {data['currency'].upper()}`\n"
                     if data["currency"] == "btc":
                         message += f"• 📈 Applied Rate: `{data['applied']}`\n"
+                    message += f"• 💰 Amount: `{round(offer[amount_key], 8)} {data['currency'].upper()}`\n"
                     message += f"• 🚚 Fast Release: `{'Yes' if data['fast_release'] else 'No'}`\n"
                     message += f"• 🏷 Price: `${data['total_usd']:.2f}`\n"
                     message += f"• ✂️ Discount: `{data['off']}%`\n"
