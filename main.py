@@ -50,7 +50,15 @@ def track_offers():
                 print(f"Synced existing orders ({len(recorded_offers)}).")
             else:
                 # Find new offers
-                new_offers = [o for o in recorded_offers if o not in previous_offers]
+                new_offers = []
+                for offer in recorded_offers:
+                    found = False
+                    for o in previous_offers:
+                        if o["order_id"] == offer["order_id"]:
+                            found = True
+                    if not found:
+                        new_offers.append(offer)
+
                 for offer in new_offers:
                     print(f"New offer discovered! {offer['order_id']}")
                     data = bitoff.get_offer(offer["order_id"])
