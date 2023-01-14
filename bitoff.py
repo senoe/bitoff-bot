@@ -8,7 +8,7 @@ load_dotenv()
 
 class Bitoff:
     def __init__(self):
-        self.client = httpx.Client(http2=True, headers={
+        self.client = httpx.Client(http2=True, timeout=20, headers={
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0",
             "Authorization": f"Bearer {os.getenv('BITOFF_AUTH_TOKEN')}",
             "Referer": "https://bitoff.io/"
