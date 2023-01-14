@@ -1,0 +1,5 @@
+pytz
+httpx[http2]
+python-dotenv
+python-telegram-bot
+python-telegram-bot-pagination
