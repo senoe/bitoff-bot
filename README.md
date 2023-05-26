@@ -19,12 +19,12 @@ TELEGRAM_TRACKER_CHANNEL_ID=
 Install dependencies
 
 ```bash
-  pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 Start the bot
 
 ```bash
-  py main.py
+py main.py
 ```
 
